@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidanPRO - Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="ri-heart-pulse-fill"></i>
+                </div>
+                <span class="logo-text">BidanPRO</span>
+            </div>
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="ri-menu-fold-line"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item active">
+                    <a href="#" class="nav-link">
+                        <i class="ri-dashboard-3-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-user-add-line"></i>
+                        <span>Pendaftaran</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-group-line"></i>
+                        <span>Pasien</span>
+                        <span class="badge">128</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-stethoscope-line"></i>
+                        <span>Pelayanan</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-calendar-schedule-line"></i>
+                        <span>Jadwal</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-money-dollar-circle-line"></i>
+                        <span>Keuangan</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-hospital-line"></i>
+                        <span>BPJS</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-pie-chart-line"></i>
+                        <span>Laporan</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="nav-divider"></div>
+
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-settings-3-line"></i>
+                        <span>Pengaturan</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-question-line"></i>
+                        <span>Bantuan</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <img src="https://ui-avatars.com/api/?name=Sari+Dewi&background=E91E8C&color=fff" alt="User">
+                </div>
+                <div class="user-details">
+                    <span class="user-name">Bidan Sari Dewi</span>
+                    <span class="user-role">Administrator</span>
+                </div>
+                <button class="logout-btn">
+                    <i class="ri-logout-box-r-line"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="ri-menu-line"></i>
+                </button>
+                <div class="greeting">
+                    <h1>Selamat Pagi, Bidan Sari! 👋</h1>
+                    <p>Kamis, 26 Desember 2024</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="search-box">
+                    <i class="ri-search-line"></i>
+                    <input type="text" placeholder="Cari pasien, layanan...">
+                </div>
+                <button class="icon-btn notification-btn">
+                    <i class="ri-notification-3-line"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+                <button class="icon-btn">
+                    <i class="ri-settings-3-line"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Stats Cards -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card stat-primary">
+                        <div class="stat-icon">
+                            <i class="ri-group-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value">15</span>
+                            <span class="stat-label">Kunjungan Hari Ini</span>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>+12%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-secondary">
+                        <div class="stat-icon">
+                            <i class="ri-heart-pulse-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value">8</span>
+                            <span class="stat-label">Pemeriksaan ANC</span>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>+5%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-accent">
+                        <div class="stat-icon">
+                            <i class="ri-syringe-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value">12</span>
+                            <span class="stat-label">Imunisasi</span>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>+8%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card stat-success">
+                        <div class="stat-icon">
+                            <i class="ri-money-dollar-circle-line"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value">Rp 2.5M</span>
+                            <span class="stat-label">Pendapatan Hari Ini</span>
+                        </div>
+                        <div class="stat-trend positive">
+                            <i class="ri-arrow-up-line"></i>
+                            <span>+15%</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h2 class="section-title">Aksi Cepat</h2>
+                <div class="actions-grid">
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="ri-user-add-line"></i>
+                        </div>
+                        <span>Pasien Baru</span>
+                    </button>
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="ri-stethoscope-line"></i>
+                        </div>
+                        <span>Pemeriksaan</span>
+                    </button>
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="ri-hospital-line"></i>
+                        </div>
+                        <span>Klaim BPJS</span>
+                    </button>
+                    <button class="action-btn">
+                        <div class="action-icon">
+                            <i class="ri-printer-line"></i>
+                        </div>
+                        <span>Cetak Laporan</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Main Grid -->
+            <div class="main-grid">
+                <!-- Queue Section -->
+                <section class="card queue-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ri-timer-line"></i>
+                            Antrean Pasien
+                        </h3>
+                        <span class="queue-count">5 pasien</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="queue-list">
+                            <li class="queue-item active">
+                                <span class="queue-number">01</span>
+                                <div class="queue-info">
+                                    <span class="queue-name">Ibu Rina Susanti</span>
+                                    <span class="queue-service">Pemeriksaan ANC</span>
+                                </div>
+                                <span class="queue-status called">Dipanggil</span>
+                            </li>
+                            <li class="queue-item">
+                                <span class="queue-number">02</span>
+                                <div class="queue-info">
+                                    <span class="queue-name">Ibu Dewi Kartika</span>
+                                    <span class="queue-service">Imunisasi - Bayi Andi</span>
+                                </div>
+                                <span class="queue-status waiting">Menunggu</span>
+                            </li>
+                            <li class="queue-item">
+                                <span class="queue-number">03</span>
+                                <div class="queue-info">
+                                    <span class="queue-name">Ibu Siti Aminah</span>
+                                    <span class="queue-service">Pelayanan KB</span>
+                                </div>
+                                <span class="queue-status waiting">Menunggu</span>
+                            </li>
+                            <li class="queue-item">
+                                <span class="queue-number">04</span>
+                                <div class="queue-info">
+                                    <span class="queue-name">Ibu Maria Indah</span>
+                                    <span class="queue-service">Pemeriksaan Nifas</span>
+                                </div>
+                                <span class="queue-status waiting">Menunggu</span>
+                            </li>
+                            <li class="queue-item">
+                                <span class="queue-number">05</span>
+                                <div class="queue-info">
+                                    <span class="queue-name">Ibu Ani Lestari</span>
+                                    <span class="queue-service">Konsultasi Umum</span>
+                                </div>
+                                <span class="queue-status waiting">Menunggu</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline">
+                            <i class="ri-list-check-2"></i>
+                            Kelola Antrean
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Schedule Section -->
+                <section class="card schedule-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ri-calendar-todo-line"></i>
+                            Jadwal Hari Ini
+                        </h3>
+                        <button class="btn btn-sm btn-primary">
+                            <i class="ri-add-line"></i>
+                            Tambah
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <ul class="schedule-list">
+                            <li class="schedule-item completed">
+                                <div class="schedule-time">
+                                    <span class="time">08:00</span>
+                                </div>
+                                <div class="schedule-indicator"></div>
+                                <div class="schedule-content">
+                                    <span class="schedule-title">ANC - Ibu Ratna</span>
+                                    <span class="schedule-desc">Pemeriksaan kehamilan 28 minggu</span>
+                                </div>
+                            </li>
+                            <li class="schedule-item current">
+                                <div class="schedule-time">
+                                    <span class="time">09:00</span>
+                                </div>
+                                <div class="schedule-indicator"></div>
+                                <div class="schedule-content">
+                                    <span class="schedule-title">Imunisasi - Bayi Andi</span>
+                                    <span class="schedule-desc">BCG + Polio 1</span>
+                                </div>
+                            </li>
+                            <li class="schedule-item">
+                                <div class="schedule-time">
+                                    <span class="time">10:00</span>
+                                </div>
+                                <div class="schedule-indicator"></div>
+                                <div class="schedule-content">
+                                    <span class="schedule-title">KB - Ibu Siti</span>
+                                    <span class="schedule-desc">Suntik KB 3 bulan</span>
+                                </div>
+                            </li>
+                            <li class="schedule-item">
+                                <div class="schedule-time">
+                                    <span class="time">11:00</span>
+                                </div>
+                                <div class="schedule-indicator"></div>
+                                <div class="schedule-content">
+                                    <span class="schedule-title">PNC - Ibu Maria</span>
+                                    <span class="schedule-desc">Pemeriksaan nifas hari ke-7</span>
+                                </div>
+                            </li>
+                            <li class="schedule-item">
+                                <div class="schedule-time">
+                                    <span class="time">13:00</span>
+                                </div>
+                                <div class="schedule-indicator"></div>
+                                <div class="schedule-content">
+                                    <span class="schedule-title">ANC - Ibu Linda</span>
+                                    <span class="schedule-desc">Pemeriksaan kehamilan 32 minggu</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Reminders & Notifications -->
+                <section class="card reminders-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ri-notification-3-line"></i>
+                            Reminder & Notifikasi
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="reminder-list">
+                            <li class="reminder-item urgent">
+                                <div class="reminder-icon">
+                                    <i class="ri-alarm-warning-line"></i>
+                                </div>
+                                <div class="reminder-content">
+                                    <span class="reminder-title">Stok Vitamin A hampir habis</span>
+                                    <span class="reminder-desc">Tersisa 5 kapsul. Segera lakukan pengadaan.</span>
+                                </div>
+                            </li>
+                            <li class="reminder-item info">
+                                <div class="reminder-icon">
+                                    <i class="ri-calendar-check-line"></i>
+                                </div>
+                                <div class="reminder-content">
+                                    <span class="reminder-title">5 pasien jadwal kontrol besok</span>
+                                    <span class="reminder-desc">Reminder WhatsApp sudah dikirim otomatis</span>
+                                </div>
+                            </li>
+                            <li class="reminder-item success">
+                                <div class="reminder-icon">
+                                    <i class="ri-hospital-line"></i>
+                                </div>
+                                <div class="reminder-content">
+                                    <span class="reminder-title">Klaim BPJS berhasil</span>
+                                    <span class="reminder-desc">3 klaim bulan ini sudah disetujui</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Recent Patients -->
+                <section class="card patients-card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="ri-user-heart-line"></i>
+                            Pasien Terbaru
+                        </h3>
+                        <a href="#" class="view-all">Lihat Semua</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Pasien</th>
+                                        <th>Layanan</th>
+                                        <th>Status</th>
+                                        <th>Tanggal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="patient-cell">
+                                                <img src="https://ui-avatars.com/api/?name=Rina+S&background=E91E8C&color=fff&size=32" alt="">
+                                                <span>Ibu Rina Susanti</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="service-tag anc">ANC</span></td>
+                                        <td><span class="status-badge completed">Selesai</span></td>
+                                        <td>26 Des 2024</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="patient-cell">
+                                                <img src="https://ui-avatars.com/api/?name=Dewi+K&background=00BFA5&color=fff&size=32" alt="">
+                                                <span>Ibu Dewi Kartika</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="service-tag imun">Imunisasi</span></td>
+                                        <td><span class="status-badge in-progress">Berlangsung</span></td>
+                                        <td>26 Des 2024</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="patient-cell">
+                                                <img src="https://ui-avatars.com/api/?name=Siti+A&background=6C63FF&color=fff&size=32" alt="">
+                                                <span>Ibu Siti Aminah</span>
+                                            </div>
+                                        </td>
+                                        <td><span class="service-tag kb">KB</span></td>
+                                        <td><span class="status-badge pending">Menunggu</span></td>
+                                        <td>26 Des 2024</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav">
+        <a href="#" class="mobile-nav-item active">
+            <i class="ri-home-5-line"></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="mobile-nav-item">
+            <i class="ri-timer-line"></i>
+            <span>Antrean</span>
+        </a>
+        <a href="#" class="mobile-nav-item main-action">
+            <i class="ri-add-line"></i>
+        </a>
+        <a href="#" class="mobile-nav-item">
+            <i class="ri-group-line"></i>
+            <span>Pasien</span>
+        </a>
+        <a href="#" class="mobile-nav-item">
+            <i class="ri-user-line"></i>
+            <span>Profil</span>
+        </a>
+    </nav>
+
+    <script src="script.js"></script>
+</body>
+</html>

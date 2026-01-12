@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BidanPRO - Daftar Pasien</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for patient list page */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .page-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gray-900);
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-top: 4px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        /* Filters */
+        .filters-bar {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .search-input-lg {
+            flex: 1;
+            min-width: 280px;
+            position: relative;
+        }
+
+        .search-input-lg i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+            font-size: 20px;
+        }
+
+        .search-input-lg input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input-lg input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(233, 30, 140, 0.1);
+        }
+
+        .filter-select {
+            padding: 14px 40px 14px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: inherit;
+            background: white;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%236B7280'%3E%3Cpath d='M12 15l-5-5h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Patient Table */
+        .patients-table {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .patients-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .patients-table th {
+            padding: 16px 20px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .patients-table td {
+            padding: 16px 20px;
+            font-size: 14px;
+            color: var(--gray-700);
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .patients-table tbody tr {
+            transition: background 0.15s;
+        }
+
+        .patients-table tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .patient-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .patient-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .patient-details h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 2px;
+        }
+
+        .patient-details span {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        .status-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-tag.active {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10B981;
+        }
+
+        .status-tag.inactive {
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+        }
+
+        .status-tag.pregnant {
+            background: rgba(233, 30, 140, 0.1);
+            color: var(--primary);
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-icon-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--gray-500);
+            transition: all 0.15s;
+        }
+
+        .action-icon-btn:hover {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .action-icon-btn.primary:hover {
+            background: rgba(233, 30, 140, 0.1);
+            color: var(--primary);
+        }
+
+        .action-icon-btn.danger:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #EF4444;
+        }
+
+        /* Pagination */
+        .table-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: var(--gray-50);
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .table-info {
+            font-size: 14px;
+            color: var(--gray-500);
+        }
+
+        .pagination {
+            display: flex;
+            gap: 6px;
+        }
+
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-600);
+            background: white;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .page-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gray-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: var(--gray-400);
+            margin: 0 auto 20px;
+        }
+
+        .empty-state h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-800);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: var(--gray-500);
+            margin-bottom: 24px;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: var(--gray-500);
+            transition: all 0.15s;
+        }
+
+        .modal-close:hover {
+            background: var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .modal-body {
+            padding: 24px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            padding: 20px 24px;
+            border-top: 1px solid var(--gray-200);
+            background: var(--gray-50);
+        }
+
+        /* Form Styles */
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+
+        .form-label .required {
+            color: #EF4444;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 12px 16px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--gray-800);
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(233, 30, 140, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-hint {
+            font-size: 12px;
+            color: var(--gray-500);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .patients-table {
+                overflow-x: auto;
+            }
+
+            .patients-table table {
+                min-width: 800px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                flex-direction: column;
+                gap: 16px;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                width: 100%;
+            }
+
+            .header-actions .btn {
+                flex: 1;
+            }
+
+            .filters-bar {
+                flex-direction: column;
+            }
+
+            .search-input-lg {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar (same as index.html) -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="ri-heart-pulse-fill"></i>
+                </div>
+                <span class="logo-text">BidanPRO</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link">
+                        <i class="ri-dashboard-3-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-user-add-line"></i>
+                        <span>Pendaftaran</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="patients.html" class="nav-link">
+                        <i class="ri-group-line"></i>
+                        <span>Pasien</span>
+                        <span class="badge">128</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-stethoscope-line"></i>
+                        <span>Pelayanan</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-hospital-line"></i>
+                        <span>BPJS</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="ri-pie-chart-line"></i>
+                        <span>Laporan</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-info">
+                <div class="user-avatar">
+                    <img src="https://ui-avatars.com/api/?name=Sari+Dewi&background=E91E8C&color=fff" alt="User">
+                </div>
+                <div class="user-details">
+                    <span class="user-name">Bidan Sari Dewi</span>
+                    <span class="user-role">Administrator</span>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="ri-menu-line"></i>
+                </button>
+                <div class="greeting">
+                    <h1>Daftar Pasien</h1>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="icon-btn notification-btn">
+                    <i class="ri-notification-3-line"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="dashboard-content">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div>
+                    <h2 class="page-title">Manajemen Pasien</h2>
+                    <p class="page-subtitle">Total 128 pasien terdaftar</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-outline">
+                        <i class="ri-download-2-line"></i>
+                        Export
+                    </button>
+                    <button class="btn btn-primary" id="addPatientBtn">
+                        <i class="ri-add-line"></i>
+                        Tambah Pasien
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-bar">
+                <div class="search-input-lg">
+                    <i class="ri-search-line"></i>
+                    <input type="text" placeholder="Cari nama, NIK, atau nomor BPJS...">
+                </div>
+                <select class="filter-select">
+                    <option value="">Semua Status</option>
+                    <option value="active">Aktif</option>
+                    <option value="pregnant">Hamil</option>
+                    <option value="inactive">Tidak Aktif</option>
+                </select>
+                <select class="filter-select">
+                    <option value="">Semua Layanan</option>
+                    <option value="anc">ANC</option>
+                    <option value="kb">KB</option>
+                    <option value="imunisasi">Imunisasi</option>
+                </select>
+            </div>
+
+            <!-- Patients Table -->
+            <div class="patients-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Pasien</th>
+                            <th>NIK</th>
+                            <th>No. BPJS</th>
+                            <th>Status</th>
+                            <th>Kunjungan Terakhir</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="patient-info">
+                                    <img src="https://ui-avatars.com/api/?name=Rina+Susanti&background=E91E8C&color=fff"
+                                        alt="" class="patient-avatar">
+                                    <div class="patient-details">
+                                        <h4>Rina Susanti</h4>
+                                        <span>28 tahun • Perempuan</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>3201012345670001</td>
+                            <td>0001234567890</td>
+                            <td><span class="status-tag pregnant"><i class="ri-heart-pulse-line"></i> Hamil 28mg</span>
+                            </td>
+                            <td>26 Des 2024</td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="action-icon-btn primary" title="Lihat Detail">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Edit">
+                                        <i class="ri-edit-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Rekam Medis">
+                                        <i class="ri-file-list-3-line"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="patient-info">
+                                    <img src="https://ui-avatars.com/api/?name=Dewi+Kartika&background=00BFA5&color=fff"
+                                        alt="" class="patient-avatar">
+                                    <div class="patient-details">
+                                        <h4>Dewi Kartika</h4>
+                                        <span>32 tahun • Perempuan</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>3201012345670002</td>
+                            <td>0001234567891</td>
+                            <td><span class="status-tag active"><i class="ri-checkbox-circle-line"></i> Aktif</span>
+                            </td>
+                            <td>25 Des 2024</td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="action-icon-btn primary" title="Lihat Detail">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Edit">
+                                        <i class="ri-edit-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Rekam Medis">
+                                        <i class="ri-file-list-3-line"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="patient-info">
+                                    <img src="https://ui-avatars.com/api/?name=Siti+Aminah&background=6C63FF&color=fff"
+                                        alt="" class="patient-avatar">
+                                    <div class="patient-details">
+                                        <h4>Siti Aminah</h4>
+                                        <span>35 tahun • Perempuan</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>3201012345670003</td>
+                            <td>0001234567892</td>
+                            <td><span class="status-tag active"><i class="ri-checkbox-circle-line"></i> Aktif</span>
+                            </td>
+                            <td>24 Des 2024</td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="action-icon-btn primary" title="Lihat Detail">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Edit">
+                                        <i class="ri-edit-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Rekam Medis">
+                                        <i class="ri-file-list-3-line"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="patient-info">
+                                    <img src="https://ui-avatars.com/api/?name=Maria+Indah&background=F59E0B&color=fff"
+                                        alt="" class="patient-avatar">
+                                    <div class="patient-details">
+                                        <h4>Maria Indah</h4>
+                                        <span>24 tahun • Perempuan</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>3201012345670004</td>
+                            <td>-</td>
+                            <td><span class="status-tag pregnant"><i class="ri-heart-pulse-line"></i> Nifas Hari
+                                    7</span></td>
+                            <td>23 Des 2024</td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="action-icon-btn primary" title="Lihat Detail">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Edit">
+                                        <i class="ri-edit-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Rekam Medis">
+                                        <i class="ri-file-list-3-line"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="patient-info">
+                                    <img src="https://ui-avatars.com/api/?name=Ani+Lestari&background=10B981&color=fff"
+                                        alt="" class="patient-avatar">
+                                    <div class="patient-details">
+                                        <h4>Ani Lestari</h4>
+                                        <span>29 tahun • Perempuan</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>3201012345670005</td>
+                            <td>0001234567894</td>
+                            <td><span class="status-tag active"><i class="ri-checkbox-circle-line"></i> Aktif</span>
+                            </td>
+                            <td>22 Des 2024</td>
+                            <td>
+                                <div class="actions-cell">
+                                    <button class="action-icon-btn primary" title="Lihat Detail">
+                                        <i class="ri-eye-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Edit">
+                                        <i class="ri-edit-line"></i>
+                                    </button>
+                                    <button class="action-icon-btn" title="Rekam Medis">
+                                        <i class="ri-file-list-3-line"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-footer">
+                    <span class="table-info">Menampilkan 1-5 dari 128 pasien</span>
+                    <div class="pagination">
+                        <button class="page-btn" disabled><i class="ri-arrow-left-s-line"></i></button>
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">...</button>
+                        <button class="page-btn">26</button>
+                        <button class="page-btn"><i class="ri-arrow-right-s-line"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add Patient Modal -->
+    <div class="modal-overlay" id="patientModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3>Tambah Pasien Baru</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="ri-close-line"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="patientForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">NIK <span class="required">*</span></label>
+                            <input type="text" class="form-input" placeholder="16 digit NIK" maxlength="16" required>
+                            <span class="form-hint">Nomor Induk Kependudukan sesuai KTP</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">No. BPJS</label>
+                            <input type="text" class="form-input" placeholder="13 digit nomor kartu" maxlength="13">
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label class="form-label">Nama Lengkap <span class="required">*</span></label>
+                        <input type="text" class="form-input" placeholder="Nama sesuai KTP" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Tanggal Lahir <span class="required">*</span></label>
+                            <input type="date" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Jenis Kelamin <span class="required">*</span></label>
+                            <select class="form-input" required>
+                                <option value="">Pilih</option>
+                                <option value="P">Perempuan</option>
+                                <option value="L">Laki-laki</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">No. Telepon</label>
+                            <input type="tel" class="form-input" placeholder="08xxxxxxxxxx">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Golongan Darah</label>
+                            <select class="form-input">
+                                <option value="">Pilih</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="AB">AB</option>
+                                <option value="O">O</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label class="form-label">Alamat</label>
+                        <textarea class="form-input form-textarea" placeholder="Alamat lengkap sesuai KTP"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="cancelBtn">Batal</button>
+                <button class="btn btn-primary">
+                    <i class="ri-save-line"></i>
+                    Simpan Pasien
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal handling
+        const modal = document.getElementById('patientModal');
+        const addBtn = document.getElementById('addPatientBtn');
+        const closeBtn = document.getElementById('closeModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+
+        addBtn.addEventListener('click', () => modal.classList.add('active'));
+        closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+        cancelBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input-lg input');
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('.patients-table tbody tr');
+
+            rows.forEach(row => {
+                const name = row.querySelector('.patient-details h4').textContent.toLowerCase();
+                const nik = row.querySelectorAll('td')[1].textContent;
+
+                if (name.includes(query) || nik.includes(query)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
