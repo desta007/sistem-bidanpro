@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\NotificationController;
+use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\PatientAuthController;
 
@@ -57,6 +58,9 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Global Search
+    Route::get('/search', [SearchController::class, 'search'])->name('search');
 
     // Patients
     Route::resource('patients', PatientController::class);
